@@ -2,7 +2,7 @@
 
 import compression from 'compression'
 import express from 'express'
-import {Server} from 'http'
+import { Server } from 'http'
 import socketIO from 'socket.io'
 
 import routing from './routing'
@@ -12,7 +12,7 @@ import setUpSocket from './socket'
 
 const app = express()
 
-//flow-disable-next-line
+// flow-disable-next-line
 const http = Server(app)
 const io = socketIO(http)
 setUpSocket(io)

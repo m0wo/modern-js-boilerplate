@@ -8,7 +8,7 @@ import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import {BrowserRouter} from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import Immutable from 'immutable'
 
 import $ from 'jquery'
