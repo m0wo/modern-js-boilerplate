@@ -6,6 +6,9 @@ import { Provider } from 'react-redux'
 import { StaticRouter } from 'react-router'
 import Helmet from 'react-helmet'
 
+import ApolloClient, { createNetworkInterface } from 'apollo-client'
+import { ApolloProvider } from 'react-apollo'
+
 import { SheetsRegistry, SheetsRegistryProvider } from 'react-jss'
 
 
@@ -14,18 +17,24 @@ import App from './../shared/app'
 import { APP_CONTAINER_CLASS, JSS_SSR_CLASS, STATIC_PATH, WDS_PORT } from '../shared/config'
 import { isProd } from '../shared/util'
 
+const client = new ApolloClient({
+  networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cj1qm67wbc6ir0134gliix4lp' }),
+})
+
 
 const renderApp = (location: string, plainPartialState: ?Object, routerContext: ?Object = {}) => {
   const store = initStore(plainPartialState)
   const sheets = new SheetsRegistry()
   const appHtml = ReactDOMServer.renderToString(
-    <Provider store={store}>
-      <StaticRouter location={location} context={routerContext}>
-        <SheetsRegistryProvider registry={sheets}>
-          <App />
-        </SheetsRegistryProvider>
-      </StaticRouter>
-    </Provider>)
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <StaticRouter location={location} context={routerContext}>
+          <SheetsRegistryProvider registry={sheets}>
+            <App />
+          </SheetsRegistryProvider>
+        </StaticRouter>
+      </Provider>
+    </ApolloProvider>)
   const head = Helmet.rewind()
 
   return (

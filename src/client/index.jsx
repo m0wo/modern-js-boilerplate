@@ -11,6 +11,9 @@ import thunkMiddleware from 'redux-thunk'
 import { BrowserRouter } from 'react-router-dom'
 import Immutable from 'immutable'
 
+import ApolloClient, { createNetworkInterface } from 'apollo-client'
+import { ApolloProvider } from 'react-apollo'
+
 import $ from 'jquery'
 import Tether from 'tether'
 
@@ -23,6 +26,10 @@ import setUpSocket from './socket'
 window.jQuery = $
 window.Tether = Tether
 require('bootstrap')
+
+const client = new ApolloClient({
+  networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cj1qm67wbc6ir0134gliix4lp' }),
+})
 
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers = (isProd ? null : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
@@ -37,13 +44,15 @@ const store = createStore(combineReducers(
 const rootEl = document.querySelector(APP_CONTAINER_SELECTOR)
 
 const wrapApp = (AppComponent, reduxStore) =>
-  <Provider store={reduxStore}>
-    <BrowserRouter>
-      <AppContainer>
-        <AppComponent />
-      </AppContainer>
-    </BrowserRouter>
-  </Provider>
+  <ApolloProvider client={client}>
+    <Provider store={reduxStore}>
+      <BrowserRouter>
+        <AppContainer>
+          <AppComponent />
+        </AppContainer>
+      </BrowserRouter>
+    </Provider>
+  </ApolloProvider>
 
 ReactDOM.render(wrapApp(App, store), rootEl)
 

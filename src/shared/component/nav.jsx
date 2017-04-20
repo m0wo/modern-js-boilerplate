@@ -9,6 +9,7 @@ import {
   HELLO_PAGE_ROUTE,
   HELLO_ASYNC_PAGE_ROUTE,
   NOT_FOUND_DEMO_PAGE_ROUTE,
+  GRAPHQL_ROUTE
 } from '../routes'
 
 const handleNavLinkClick = () => {
@@ -29,6 +30,7 @@ const Nav = () =>
           { route: HELLO_PAGE_ROUTE, label: 'Say Hello' },
           { route: HELLO_ASYNC_PAGE_ROUTE, label: 'Say Hello Asynchronously' },
           { route: NOT_FOUND_DEMO_PAGE_ROUTE, label: '404 Demo' },
+          { route: GRAPHQL_ROUTE, label: 'GraphQL Demo'}
         ].map(link => (
           <li className="nav-item" key={link.route}>
             <NavLink to={link.route} className="nav-link" activeStyle={{ color: 'white' }} exact onClick={handleNavLinkClick}>{link.label}</NavLink>
