@@ -5,6 +5,7 @@ import {
   helloPage,
   helloAsyncPage,
   helloEndpoint,
+  graphQlPage
 } from './controller'
 
 import {
@@ -12,6 +13,7 @@ import {
   HELLO_PAGE_ROUTE,
   HELLO_ASYNC_PAGE_ROUTE,
   helloEndpointRoute,
+  GRAPHQL_ROUTE
 } from '../shared/routes'
 
 import renderApp from './render-app'
@@ -27,6 +29,10 @@ export default (app: Object) => {
 
   app.get(HELLO_ASYNC_PAGE_ROUTE, (req, res) => {
     res.send(renderApp(req.url, helloAsyncPage()))
+  })
+
+  app.get(GRAPHQL_ROUTE, (req, res) => {
+    res.send(renderApp(req.url, graphQlPage()))
   })
 
   app.get(helloEndpointRoute(), (req, res) => {
